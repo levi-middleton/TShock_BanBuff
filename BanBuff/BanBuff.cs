@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Koishi.BanBuff
 {
-	[ApiVersion(1, 25)]
+	[ApiVersion(2, 0)]
 	public class BanBuff : TerrariaPlugin
 	{
 		public static BuffManager BuffBans;
@@ -20,7 +20,7 @@ namespace Koishi.BanBuff
 		{
 			get
 			{
-				return "RYH(Koishi)";
+				return "RYH(Koishi) and Levi Middleton";
 			}
 		}
 
