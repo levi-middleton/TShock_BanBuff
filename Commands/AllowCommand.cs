@@ -22,7 +22,7 @@ namespace Koishi.BanBuff.Commands
 
         public string Usage {  get { return "allow <buff name|buff id> <group name>"; } }
 
-        public string Description { get { return "Allows a group to use a buff"; } }
+        public string Description { get { return "Allows a group to use a banned buff"; } }
 
         public void Invoke(CommandArgs args)
         {

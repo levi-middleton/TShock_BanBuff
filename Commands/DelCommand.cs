@@ -20,7 +20,7 @@ namespace Koishi.BanBuff.Commands
 
         public int ParameterCount { get { return 2; } }
 
-        public string Usage { get { return "del <buff name>"; } }
+        public string Usage { get { return "del <buff name|buff id>"; } }
 
         public string Description { get { return "Deletes a buff ban"; } }
 
