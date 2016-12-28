@@ -9,7 +9,7 @@ namespace Koishi.BanBuff
 
 		static Utils()
 		{
-			List<string> strs = new List<string>()
+            BuffID = new List<string>()
 			{
 				"",
 				"Obsidian Skin",
@@ -204,16 +204,15 @@ namespace Koishi.BanBuff
 				"Suspicious Looking Eye",
 				"Companion Cube"
 			};
-			Utils.BuffID = strs;
 		}
 
 		public static BuffBan GetBuffBanById(int id)
 		{
-			for (int i = 0; i < Koishi.BanBuff.BanBuff.BuffBans.BuffBans.Count; i++)
+			for (int i = 0; i < Koishi.BanBuff.BanBuffPlugin.BuffManager.BuffBans.Count; i++)
 			{
-				if (Koishi.BanBuff.BanBuff.BuffBans.BuffBans[i].ID == id)
+				if (Koishi.BanBuff.BanBuffPlugin.BuffManager.BuffBans[i].ID == id)
 				{
-					return Koishi.BanBuff.BanBuff.BuffBans.BuffBans[i];
+					return Koishi.BanBuff.BanBuffPlugin.BuffManager.BuffBans[i];
 				}
 			}
 			return null;
@@ -234,49 +233,42 @@ namespace Koishi.BanBuff
 
 		public static List<int> GetBuffByName(string name)
 		{
-			List<int> nums;
-			List<int> nums1 = new List<int>();
+			List<int> nums = new List<int>();
 			string lower = name.ToLower();
-			List<string>.Enumerator enumerator = Utils.BuffID.GetEnumerator();
-			try
-			{
-				while (enumerator.MoveNext())
-				{
-					string current = enumerator.Current;
-					if (string.IsNullOrEmpty(current))
-					{
-						continue;
-					}
-					if (current.ToLower() != lower)
-					{
-						if (!current.ToLower().StartsWith(lower))
-						{
-							continue;
-						}
-						nums1.Add(Utils.BuffID.IndexOf(current));
-					}
-					else
-					{
-						nums = new List<int>()
-						{
-							Utils.BuffID.IndexOf(current)
-						};
-						return nums;
-					}
-				}
-				return nums1;
-			}
-			finally
-			{
-				((IDisposable)enumerator).Dispose();
-			}
+
+            foreach(string current in Utils.BuffID)
+            {
+                if (string.IsNullOrEmpty(current))
+                {
+                    continue;
+                }
+
+                if (current.ToLower() == lower)
+                {
+                    return new List<int>()
+                        {
+                            Utils.BuffID.IndexOf(current)
+                        };
+                }
+                else
+                {
+                    if (current.ToLower().StartsWith(lower))
+                    {
+                        nums.Add(Utils.BuffID.IndexOf(current));
+                    }
+                }
+            }
+
 			return nums;
 		}
 
 		public static string Name(int id)
 		{
-			object[] item = new object[] { Utils.BuffID[id], "(", id, ")" };
-			return string.Concat(item);
+            if(id < 1 || id >= BuffID.Count)
+            {
+                return string.Format("Unknown Buff ({0})", id);
+            }
+            return string.Format("{0} ({1})", BuffID[id], id);
 		}
 	}
 }
