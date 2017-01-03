@@ -12,47 +12,47 @@ using Koishi.BanBuff.Commands;
 
 namespace Koishi.BanBuff
 {
-	[ApiVersion(2, 0)]
-	public class BanBuffPlugin : TerrariaPlugin
-	{
-		public static BuffManager BuffManager;
+    [ApiVersion(2, 0)]
+    public class BanBuffPlugin : TerrariaPlugin
+    {
+        public static BuffManager BuffManager;
 
-		public override string Author
-		{
-			get
-			{
-				return "RYH(Koishi) and Levi Middleton";
-			}
-		}
+        public override string Author
+        {
+            get
+            {
+                return "RYH(Koishi) and Levi Middleton";
+            }
+        }
 
-		public override string Description
-		{
-			get
-			{
-				return "Ban Buff";
-			}
-		}
+        public override string Description
+        {
+            get
+            {
+                return "Ban Buff";
+            }
+        }
 
-		public override string Name
-		{
-			get
-			{
-				return "BanBuff";
-			}
-		}
+        public override string Name
+        {
+            get
+            {
+                return "BanBuff";
+            }
+        }
 
-		public override Version Version
-		{
-			get
-			{
-				return new Version("1.3.0.0");
-			}
-		}
+        public override Version Version
+        {
+            get
+            {
+                return new Version("1.4.0.0");
+            }
+        }
 
         IDictionary<string, IChatCommand> _commandDict = new SortedDictionary<string, IChatCommand>();
 
-		public BanBuffPlugin(Main game) : base(game)
-		{
+        public BanBuffPlugin(Main game) : base(game)
+        {
             base.Order = 1;
             {
                 IChatCommand cmd = new AddCommand(BuffManager);
@@ -80,32 +80,32 @@ namespace Koishi.BanBuff
             }
         }
 
-		private void OnChatCommand(CommandArgs args)
-		{
-			string action = (args.Parameters.Count == 0 ? "help" : args.Parameters[0].ToLower());
+        private void OnChatCommand(CommandArgs args)
+        {
+            string action = (args.Parameters.Count == 0 ? "help" : args.Parameters[0].ToLower());
             IChatCommand cmd;
-            if(!_commandDict.TryGetValue(action, out cmd))
+            if (!_commandDict.TryGetValue(action, out cmd))
             {
                 cmd = _commandDict["help"];
             }
-            if(args.Parameters.Count != cmd.ParameterCount && cmd.ParameterCount != 0)
+            if (args.Parameters.Count != cmd.ParameterCount && cmd.ParameterCount != 0)
             {
                 args.Player.SendErrorMessage("Usage: {0}banbuff {1}", TShockAPI.Commands.Specifier, cmd.Usage);
                 return;
             }
             cmd.Invoke(args);
-		}
+        }
 
-		public override void Initialize()
-		{
+        public override void Initialize()
+        {
             TShockAPI.Commands.ChatCommands.Add(new Command("komeiji.banbuff", OnChatCommand, "banbuff", "buffban"));
-			BuffManager = new BuffManager(TShock.DB);
-			ServerApi.Hooks.NetGetData.Register(this, new HookHandler<GetDataEventArgs>(OnGetData));
-		}
+            BuffManager = new BuffManager(TShock.DB);
+            ServerApi.Hooks.NetGetData.Register(this, new HookHandler<GetDataEventArgs>(OnGetData));
+        }
 
-		private void OnGetData(GetDataEventArgs args)
-		{
-            switch(args.MsgID)
+        private void OnGetData(GetDataEventArgs args)
+        {
+            switch (args.MsgID)
             {
                 case PacketTypes.PlayerBuff:
                     {
@@ -142,6 +142,6 @@ namespace Koishi.BanBuff
                     }
                     break;
             }
-		}
-	}
+        }
+    }
 }

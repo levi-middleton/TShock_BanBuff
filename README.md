@@ -11,3 +11,6 @@ Usage:
 - `/banbuff disallow <buff name|buff id> <group name>` - Removes special permission for a group to use a banned buff.
 - `/banbuff list` - Lists all buff bans.
 - `/banbuff help` - Accesses the in-game help menu.
+
+Permissions:
+- komeiji.banbuff - For access to all banbuff commands.
